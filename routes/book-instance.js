@@ -1,25 +1,17 @@
 var express = require('express');
 
+var bookInstance = require('../controllers/book-instance');
+
 var router = express.Router();
 
-router.get('/bookinstances', (req, res) => {
-	res.send('This is the book instances listing page.');
-});
+router.get('/bookinstances', bookInstance.bookinstance_list);
 
-router.post('/bookinstance/create', (req, res) => {
-	res.send('This is the create a bookinstance list page');
-});
+router.post('/bookinstance/create', bookInstance.bookinstance_create_post);
 
-router.get('/bookinstance/:id', (req, res) => {
-	res.send('This is the single bookinstance view page.');
-});
+router.get('/bookinstance/:id', bookInstance.bookinstance_detail);
 
-router.patch('/bookinstance/:id/update', (req, res) => {
-	res.send('This is the update page of the bookinstance.');
-});
+router.patch('/bookinstance/:id/update', bookInstance.bookinstance_update_post);
 
-router.delete('/bookinstance/:id/delete', (req, res) => {
-	res.send('This is the delete page of a bookinstance. ');
-});
+router.delete('/bookinstance/:id/delete', bookInstance.bookinstance_delete_post);
 
 module.exports = router;

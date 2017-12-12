@@ -1,25 +1,16 @@
 var express = require('express');
 
+var genre = require('../controllers/genre');
 var router = express.Router();
 
-router.get('/genres', (req, res) => {
-	res.send('This is the genre listing page.');
-});
+router.get('/genres', genre.genre_list);
 
-router.post('/genre/create', (req, res) => {
-	res.send('This is the create a genre list page');
-});
+router.post('/genre/create', genre.genre_create_post);
 
-router.get('/genre/:id', (req, res) => {
-	res.send('This is the single genre view page.');
-});
+router.get('/genre/:id', genre.genre_detail);
 
-router.patch('/genre/:id/update', (req, res) => {
-	res.send('This is the update page of the genre.');
-});
+router.patch('/genre/:id/update', genre.genre_update_post);
 
-router.delete('/genre/:id/delete', (req, res) => {
-	res.send('This is the delete page of a genre. ');
-});
+router.delete('/genre/:id/delete', genre.genre_delete_post);
 
 module.exports = router;
