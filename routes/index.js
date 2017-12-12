@@ -3,11 +3,11 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	res.render('index', { title: 'Express' });
+	res.redirect('/catalog');
 });
 
-router.get('/catalog/', (req, res) => {
-	res.send('This is the home/index page of the LocalLibrary app');
+router.get('/catalog', (req, res) => {
+	res.render('index', {title: 'Default Title'});
 });
 
 module.exports = router;

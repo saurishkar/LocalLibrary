@@ -23,6 +23,7 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "nodemon": "^1.12.5"
+    "nodemon": "^1.12.5",
+    "pug": "^2.0.0-rc.4"
   }
 }
