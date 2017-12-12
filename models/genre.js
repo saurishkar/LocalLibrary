@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 var Schema = mongoose.Schema;
 
-var Genre = new Schema({
+var newSchema = new Schema({
 	name: {
 		type: String,
 		min: 3,
@@ -11,10 +11,10 @@ var Genre = new Schema({
 	}
 });
 
-Genre.virtual('url').get(() => {
+newSchema.virtual('url').get(() => {
 	return `/catalog/genre/${this._id}`;
 });
 
-module.exports = {
-	Genre
-};
+var Genre = mongoose.model('Genre', newSchema);
+
+module.exports = Genre;

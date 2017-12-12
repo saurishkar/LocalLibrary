@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 var Schema = mongoose.Schema;
 
-var BookInstance = new Schema({
+var newSchema = new Schema({
 	imprint: {
 		type: String,
 		min: 3,
@@ -21,10 +21,10 @@ var BookInstance = new Schema({
 	}
 });
 
-BookInstance.virtual('url').get(() => {
+newSchema.virtual('url').get(() => {
 	return `/catalog/bookinstance/${this._id}`;
 });
 
-module.exports = {
-	BookInstance
-};
+var BookInstance = mongoose.model('BookInstance', newSchema);
+
+module.exports = BookInstance;
