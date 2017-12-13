@@ -1,4 +1,5 @@
 var Author = require('../models/author');
+var Book = require('../models/book');
 
 exports.author_list = (req, res) => {
 	Author.find({}).then((docs) => {
@@ -9,7 +10,18 @@ exports.author_list = (req, res) => {
 };
 
 exports.author_detail = (req, res) => {
-	res.send('Not Implemented: Author Detail');
+	var data = {};
+	Author.findById(req.params.id).then((author) => {
+		data.author = author;
+		Book.find({author: req.params.id}).then((list) => {
+			data.books = list;
+			res.render('author_detail', {title: 'Author Detail', data});
+		}, (e) => {
+			res.render('author_detail', {title: 'Author Detail', error: e});
+		});
+	}, (e) => {
+		res.render('author_detail', {title: 'Author Detail', error: e});
+	});
 };
 
 exports.author_create_get = (req, res) => {
