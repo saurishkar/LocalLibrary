@@ -9,5 +9,6 @@ block content
 	ul(class="list-unstyled")
 		each item in data
 			li 
-				strong #{item.fullname}
-				p #{item.date_of_birth} - #{item.date_of_death}
+				strong 
+					a(href=item.url) #{item.fullname}
+				p ( #{item.timeline_format} )
