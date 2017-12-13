@@ -9,7 +9,11 @@ exports.genre_list = (req, res) => {
 };
 
 exports.genre_detail = (req, res) => {
-	res.send('Not Implemented: genre Detail');
+	Genre.findById(req.params.id).then((docs) => {
+		res.render('genre_detail', {title: 'Genre', data: docs});
+	}, (e) => {
+		res.render('genre_detail', {title: 'Genre', error: e});
+	});
 };
 
 exports.genre_create_get = (req, res) => {

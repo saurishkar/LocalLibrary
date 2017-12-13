@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var moment = require('moment');
 
 var Schema = mongoose.Schema;
 
@@ -28,6 +29,10 @@ var newSchema = new Schema({
 
 newSchema.virtual('url').get(function() {
 	return `/catalog/bookinstance/${this._id}`;
+});
+
+newSchema.virtual('due_back_format').get(function() {
+	return moment(this.due_back).format('MMMM Do YYYY, h:mm:ss a');
 });
 
 var BookInstance = mongoose.model('BookInstance', newSchema);
