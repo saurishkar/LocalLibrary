@@ -1,7 +1,11 @@
 var Book = require('../models/book');
 
 exports.book_list = (req, res) => {
-	res.send('Not Implemented: book List');
+	Book.find({}).populate('author').then((docs) => {
+		res.render('book_list', {title: 'Book Listing Page', data: docs});
+	}, (e) => {
+		res.render('book_list', {title: 'Book Listing Page', error: e});
+	});
 };
 
 exports.book_detail = (req, res) => {

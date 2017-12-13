@@ -11,7 +11,7 @@ var newSchema = new Schema({
 	}
 });
 
-newSchema.virtual('url').get(() => {
+newSchema.virtual('url').get(function () {
 	return `/catalog/genre/${this._id}`;
 });
 

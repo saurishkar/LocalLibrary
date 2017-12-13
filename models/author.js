@@ -24,11 +24,11 @@ const newSchema = new Schema({
 	
 });
 
-newSchema.virtual('fullname').get(() => {
-	return `${this.firstname} ${this.lastname}`;
+newSchema.virtual('fullname').get(function () {
+	return `${this.first_name} ${this.family_name}`;
 });
 
-newSchema.virtual('url').get(() => {
+newSchema.virtual('url').get(function () {
 	return `/catalog/author/${this._id}`;
 });
 
