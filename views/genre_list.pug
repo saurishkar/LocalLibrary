@@ -1,0 +1,13 @@
+extends layout
+
+block content
+
+	h1= title
+
+	p The following is the list of all the genre of the books in the Local Library database :
+
+	ul(class="list-unstyled")
+		each item in data
+			li(class="list-unstyled-item")
+				p 
+					a(href=item.url) #{item.name}

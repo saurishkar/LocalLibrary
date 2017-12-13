@@ -1,7 +1,11 @@
 var Author = require('../models/author');
 
 exports.author_list = (req, res) => {
-	res.send('Not Implemented: Author List');
+	Author.find({}).then((docs) => {
+		res.render('author_list', {title: 'Author List', data: docs});
+	}, (e) => {
+		res.render('author_list', {title: 'Author List', error: e});
+	});
 };
 
 exports.author_detail = (req, res) => {

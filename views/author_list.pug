@@ -1,0 +1,13 @@
+extends layout
+
+block content
+
+	h1= title
+
+	p The following are the list of authors in the Local Library database :
+
+	ul(class="list-unstyled")
+		each item in data
+			li 
+				strong #{item.fullname}
+				p #{item.date_of_birth} - #{item.date_of_death}

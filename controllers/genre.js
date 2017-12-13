@@ -1,7 +1,11 @@
-var {Genre} = require('../models/genre');
+var Genre = require('../models/genre');
 
 exports.genre_list = (req, res) => {
-	res.send('Not Implemented: genre List');
+	Genre.find({}).then((docs) => {
+		res.render('genre_list', {title: 'Genre List', data: docs});
+	}, (e) => {
+		res.render('genre_list', {title: 'Genre List', error: e});
+	});
 };
 
 exports.genre_detail = (req, res) => {
