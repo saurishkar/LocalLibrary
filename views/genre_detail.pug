@@ -1,6 +1,15 @@
 extends layout
 
 block content
-	h1= title
+	h1 #{title} - #{data.genre.name}
 
-	p= data.name
+	if (data.books.length)
+		p The following are the books of this genre in Local Library database :
+		ul(class="list-group")
+			each item in data.books
+				li(class="list-group-item")
+					h3
+						a(href=item.url, class="text-danger") #{item.title}
+					p #{item.summary}
+	else
+		p No Books Available in this Genre

@@ -1,4 +1,5 @@
 var Genre = require('../models/genre');
+var Book = require('../models/book');
 
 exports.genre_list = (req, res) => {
 	Genre.find({}).then((docs) => {
@@ -9,10 +10,18 @@ exports.genre_list = (req, res) => {
 };
 
 exports.genre_detail = (req, res) => {
+	var data = {}, error = {};
 	Genre.findById(req.params.id).then((docs) => {
-		res.render('genre_detail', {title: 'Genre', data: docs});
+		data.genre = docs;
+		Book.find({genre: req.params.id}).then((list) => {
+			data.books = list;
+			res.render('genre_detail', {title: 'Genre', data});
+		}, (e) => {
+			error = e;
+			res.render({title: 'Genre', error: error});
+		});
 	}, (e) => {
-		res.render('genre_detail', {title: 'Genre', error: e});
+		error = e;
 	});
 };
 
