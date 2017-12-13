@@ -3,9 +3,9 @@ var Book = require('../models/book');
 
 exports.author_list = (req, res) => {
 	Author.find({}).then((docs) => {
-		res.render('author_list', {title: 'Author List', data: docs});
+		res.render('author/author_list', {title: 'Author List', data: docs});
 	}, (e) => {
-		res.render('author_list', {title: 'Author List', error: e});
+		res.render('author/author_list', {title: 'Author List', error: e});
 	});
 };
 
@@ -15,12 +15,12 @@ exports.author_detail = (req, res) => {
 		data.author = author;
 		Book.find({author: req.params.id}).then((list) => {
 			data.books = list;
-			res.render('author_detail', {title: 'Author Detail', data});
+			res.render('author/author_detail', {title: 'Author Detail', data});
 		}, (e) => {
-			res.render('author_detail', {title: 'Author Detail', error: e});
+			res.render('author/author_detail', {title: 'Author Detail', error: e});
 		});
 	}, (e) => {
-		res.render('author_detail', {title: 'Author Detail', error: e});
+		res.render('author/author_detail', {title: 'Author Detail', error: e});
 	});
 };
 

@@ -4,9 +4,9 @@ exports.bookinstance_list = (req, res) => {
 	BookInstance.find({})
 		.populate('book')
 		.then((docs) => {
-			res.render('bookinstance_list', {title: 'Book Instance List', data: docs});
+			res.render('bookinstance/bookinstance_list', {title: 'Book Instance List', data: docs});
 		}, (e) => {
-			res.render('bookinstance_list', {title: 'Book Instance List', error: e});
+			res.render('bookinstance/bookinstance_list', {title: 'Book Instance List', error: e});
 		});
 };
 

@@ -4,9 +4,9 @@ var BookInstance = require('../models/book-instance');
 
 exports.book_list = (req, res) => {
 	Book.find({}).populate('author').then((docs) => {
-		res.render('book_list', {title: 'Book Listing Page', data: docs});
+		res.render('book/book_list', {title: 'Book Listing Page', data: docs});
 	}, (e) => {
-		res.render('book_list', {title: 'Book Listing Page', error: e});
+		res.render('book/book_list', {title: 'Book Listing Page', error: e});
 	});
 };
 
@@ -19,13 +19,13 @@ exports.book_detail = (req, res) => {
 			data.book = docs;
 			BookInstance.find({book: req.params.id}).then((list) => {
 				data.bookinstances = list;
-				res.render('book_detail', {data});
+				res.render('book/book_detail', {data});
 			} ,(e) => {
 				error = e;
-				res.render('book_detail', {error});
+				res.render('book/book_detail', {error});
 			});
 		}, (e) => {
-			res.render('book_detail', {error: e});
+			res.render('book/book_detail', {error: e});
 		});
 };
 
