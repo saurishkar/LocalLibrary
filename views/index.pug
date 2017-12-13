@@ -1,0 +1,21 @@
+extends layout
+
+block content
+	h1= title
+	p Welcome to #[em LocalLibrary], a very basic Express website developed as a tutorial example on the Mozilla Developer Network.
+
+	h1 Dynamic Content
+
+	if error
+		p Error fetching the content
+	else
+		p The library has the following records :
+		ul(class="sidebar-nav")
+			li Books :
+				span= data.book_count
+			li Copies :
+				span= data.book_instance_count
+			li Authors :
+				span= data.author_count
+			li Genres :
+				span= data.genre_count

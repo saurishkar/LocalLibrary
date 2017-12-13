@@ -1,0 +1,14 @@
+extends ../layout
+
+block content
+
+	h1= title
+
+	p The following are the list of authors in the Local Library database :
+
+	ul(class="list-unstyled")
+		each item in data
+			li 
+				strong 
+					a(href=item.url) #{item.fullname}
+				p ( #{item.timeline_format} )

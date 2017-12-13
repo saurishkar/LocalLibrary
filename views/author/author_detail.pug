@@ -1,0 +1,23 @@
+extends ../layout
+
+block content
+
+	h1= title
+
+	h2(class="text-danger") #{data.author.fullname}
+	h4 ( #{data.author.timeline_format} )
+	hr
+
+	h3 Books
+
+	if(data.books.length)
+		ul(class="list-group list-unstyled")
+			each item in data.books
+				li 
+					h5(class="text-danger") 
+						a(href=item.url) #{item.title}
+					p #{item.summary}
+				hr
+
+	else
+		p No Books for this author are available right now.

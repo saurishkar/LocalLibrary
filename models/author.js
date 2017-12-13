@@ -1,37 +1,49 @@
 const mongoose = require('mongoose');
+var moment = require('moment');
 
 const Schema = mongoose.Schema;
 
-const Author = new Schema({
-	firstname: {
+const newSchema = new Schema({
+	first_name: {
 		type: String,
 		min: 3,
 		max: 10,
 		required: true
 	},
-	lastname: {
+	family_name: {
 		type: String,
 		min: 3,
 		max: 10,
 		required: true
 	},
-	dob: {
+	date_of_birth: {
 		type: Date
 	},
-	dod: {
+	date_of_death: {
 		type: Date
 	}
 	
 });
 
-Author.virtual('fullname').get(() => {
-	return `${this.firstname} ${this.lastname}`;
+newSchema.virtual('fullname').get(function () {
+	return `${this.first_name} ${this.family_name}`;
 });
 
-Author.virtual('url').get(() => {
-	return `catalog/author/${this._id}`;
+newSchema.virtual('url').get(function () {
+	return `/catalog/author/${this._id}`;
 });
 
-module.exports = {
-	Author
-};
+newSchema.virtual('timeline_format').get(function () {
+	var birth = '', death = '';
+	if(this.date_of_birth) {
+		birth = moment(this.date_of_birth).format('YYYY');
+	}
+	if(this.date_of_death) {
+		death = moment(this.date_of_death).format('YYYY');
+	}
+	return `${birth} - ${death}`;
+});
+
+var Author = mongoose.model('Author', newSchema);
+
+module.exports = Author;

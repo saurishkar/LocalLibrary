@@ -1,0 +1,10 @@
+extends ../layout
+
+block content
+	h1= title
+
+	h5 The Following books are available in the Local Library database :
+	ol(class="list-unstyled")
+		each item in data
+			a(href=item.url) 
+				li #{item.title} (#{item.author.fullname})

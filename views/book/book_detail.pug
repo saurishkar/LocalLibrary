@@ -1,0 +1,66 @@
+extends ../layout
+
+block content
+
+	h1= data.book[0].title
+
+	h4 #{data.book[0].author.fullname}
+
+	hr
+	h4(class="text-danger") Summary :
+	p #{data.book[0].summary}
+
+	h4(class="text-danger") Genres :
+	if(data.book[0].genre.length)
+		ul(class="list-unstyled") 
+			each item in data.book[0].genre
+				li(class="list-unstyled-item") #{item.name}
+	else 
+		p No Genres Available
+
+	h4(class="text-danger") Copies :
+	if (data.bookinstances.length)
+		ul(class="list-group")
+			each item in data.bookinstances
+				li(class="list-group-item")
+					p
+						if(item.status === 'Available')
+							p
+								div(class="btn btn-xs btn-success") #{item.status}
+							p 
+								strong Imprint : 
+								span #{item.imprint}
+							p
+								strong Due : 
+								span #{item.due_back_format} 
+							p
+								strong Id : 
+								span #{item._id}
+
+						else if(item.status === 'Loaned')
+							p
+								div(class="btn btn-xs btn-danger") #{item.status}
+							p
+								strong Imprint : 
+								span #{item.imprint}
+							p
+								strong Due : 
+								span #{item.due_back_format}
+
+							p
+								strong Id : 
+								span #{item._id}
+						else
+							p 
+								div(class="btn btn-xs btn-warning") #{item.status}
+							p
+								strong Imprint : 
+								span #{item.imprint}
+							p
+								strong Due : 
+								span #{item.due_back_format}
+							p
+								strong Id : 
+								span #{item._id}
+	else 
+		p No Copies Available

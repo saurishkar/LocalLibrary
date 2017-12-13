@@ -1,0 +1,28 @@
+extends ../layout
+
+block content
+
+	h1= title
+
+	p The following are the book instances in the Local Library Database :
+
+	ul(class="list-unstyled")
+		each item in data
+			li(class="list-unstyled-item list-group-item")
+				p
+					a(href=item.url, style="text-decoration: none") 
+						h4(class="text-danger") #{item.book.title} 
+					
+					span 
+						strong  ISBN: #{item.book.isbn} 
+					
+				if (item.status === 'Available')
+					div(class="btn btn-xs btn-success") #{item.status}
+
+				else if (item.status === 'Loaned')
+					div(class="btn btn-xs btn-danger") #{item.status}
+					div(class="btn btn-xs btn-primary")  ( Due : #{item.due_back_format} )
+				else 
+					div(class="btn btn-xs btn-warning") #{item.status}
+					div(class="btn btn-xs btn-primary")  ( Due : #{item.due_back_format} )
+
