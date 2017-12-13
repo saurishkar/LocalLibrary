@@ -1,4 +1,5 @@
 var Book = require('../models/book');
+var { ObjectID } = require('mongodb');
 
 exports.book_list = (req, res) => {
 	Book.find({}).populate('author').then((docs) => {
@@ -9,7 +10,14 @@ exports.book_list = (req, res) => {
 };
 
 exports.book_detail = (req, res) => {
-	res.send('Not Implemented: book Detail');
+	Book.find({_id: new ObjectID(req.params.id)})
+		.populate('author')
+		.populate('genre')
+		.then((docs) => {
+			res.render('book_detail', {data: docs[0]});
+		}, (e) => {
+			res.render('book_detail', {error: e});
+		});
 };
 
 exports.book_create_get = (req, res) => {

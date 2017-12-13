@@ -1,0 +1,16 @@
+extends layout
+
+block content
+
+	h1= data.title
+
+	h4 #{data.author.fullname}
+
+	hr
+	h5 Summary :
+	p #{data.summary}
+
+	h5 Genres :
+	ul(class="list-unstyled") 
+		each item in data.genre
+			li(class="list-unstyled-item") #{item.name}
