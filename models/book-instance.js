@@ -8,16 +8,21 @@ var newSchema = new Schema({
 		min: 3,
 		required: true
 	},
-	due_date: {
+	due_back: {
 		type: Date,
 		required: true,
-		default: new Date(),
+		default: Date.now(),
 	},
 	status: {
 		type: String,
 		required: true,
-		enum: ['Maintainence', 'Reserved', 'Loaned', 'Available'],
-		default: 'Maintainence'
+		enum: ['Maintenance', 'Reserved', 'Loaned', 'Available'],
+		default: 'Maintenance'
+	},
+	book: {
+		type: Schema.ObjectId,
+		required: true,
+		ref: 'Book'
 	}
 });
 

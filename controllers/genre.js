@@ -1,4 +1,4 @@
-var Genre = require('../models/genre');
+var {Genre} = require('../models/genre');
 
 exports.genre_list = (req, res) => {
 	res.send('Not Implemented: genre List');
