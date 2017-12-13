@@ -11,7 +11,11 @@ exports.bookinstance_list = (req, res) => {
 };
 
 exports.bookinstance_detail = (req, res) => {
-	res.send('Not Implemented: bookinstance Detail');
+	BookInstance.findById(req.params.id).populate('book').then((item) => {
+		res.render('bookinstance/bookinstance_detail', {title: 'Book Instance Detail', data: item});
+	}, (e) => {
+		res.render('bookinstance/bookinstance_detail', {title: 'Book Instance Detail', error: e});
+	});
 };
 
 exports.bookinstance_create_get = (req, res) => {

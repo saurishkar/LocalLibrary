@@ -1,0 +1,28 @@
+extends ../layout
+
+block content
+
+	h1= title
+
+	h3 Id : 
+		span(class="text-danger") #{data._id}
+	hr
+
+	h4 Imprint : 
+		span(class="text-primary") #{data.imprint}
+
+	h4 Book Title : 
+		a(href=data.book.url) #{data.book.title}
+
+	
+	if(data.status === 'Available')
+		div(class="btn btn-md btn-success") #{data.status}
+	else if(data.status === 'Loaned')
+		div(class="btn btn-md btn-danger") #{data.status}
+		div(class="btn btn-md btn-info") ( Due : #{data.due_back_format} )
+	else
+		div(class="btn btn-md btn-warning") #{data.status}
+		div(class="btn btn-md btn-info") ( Due : #{data.due_back_format} )
+
+
+

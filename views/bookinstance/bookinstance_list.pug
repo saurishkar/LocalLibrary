@@ -9,19 +9,20 @@ block content
 	ul(class="list-unstyled")
 		each item in data
 			li(class="list-unstyled-item list-group-item")
-				span 
-					a(href=item.book.url) #{item.book.title} 
-				
-				span 
-					strong  ISBN: #{item.book.isbn} 
-				
+				p
+					a(href=item.url, style="text-decoration: none") 
+						h4(class="text-danger") #{item.book.title} 
+					
+					span 
+						strong  ISBN: #{item.book.isbn} 
+					
 				if (item.status === 'Available')
-					span(class="btn btn-xs btn-success") #{item.status}
+					div(class="btn btn-xs btn-success") #{item.status}
 
 				else if (item.status === 'Loaned')
-					span(class="btn btn-xs btn-danger") #{item.status}
-					span(class="btn btn-xs btn-primary")  ( Due : #{item.due_back_format} )
+					div(class="btn btn-xs btn-danger") #{item.status}
+					div(class="btn btn-xs btn-primary")  ( Due : #{item.due_back_format} )
 				else 
-					span(class="btn btn-xs btn-warning") #{item.status}
-					span(class="btn btn-xs btn-primary")  ( Due : #{item.due_back_format} )
+					div(class="btn btn-xs btn-warning") #{item.status}
+					div(class="btn btn-xs btn-primary")  ( Due : #{item.due_back_format} )
 
