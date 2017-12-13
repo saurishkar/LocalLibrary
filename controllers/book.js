@@ -1,5 +1,6 @@
 var Book = require('../models/book');
 var { ObjectID } = require('mongodb');
+var BookInstance = require('../models/book-instance');
 
 exports.book_list = (req, res) => {
 	Book.find({}).populate('author').then((docs) => {
@@ -10,11 +11,19 @@ exports.book_list = (req, res) => {
 };
 
 exports.book_detail = (req, res) => {
+	var data = {}, error = {};
 	Book.find({_id: new ObjectID(req.params.id)})
 		.populate('author')
 		.populate('genre')
 		.then((docs) => {
-			res.render('book_detail', {data: docs[0]});
+			data.book = docs;
+			BookInstance.find({book: req.params.id}).then((list) => {
+				data.bookinstances = list;
+				res.render('book_detail', {data});
+			} ,(e) => {
+				error = e;
+				res.render('book_detail', {error});
+			});
 		}, (e) => {
 			res.render('book_detail', {error: e});
 		});
