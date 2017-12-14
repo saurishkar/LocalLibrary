@@ -5,9 +5,15 @@ var Schema = mongoose.Schema;
 var newSchema = new Schema({
 	name: {
 		type: String,
-		min: 3,
-		max: 100,
-		required: true
+		minLength: 3,
+		maxLength: 100,
+		required: true,
+		validate: {
+			validator: (v) => {
+				return v.length < 3 ? false: true;
+			},
+			message: '{VALUE} should be atleast 3 characters long'
+		}
 	}
 });
 

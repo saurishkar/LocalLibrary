@@ -26,11 +26,22 @@ exports.genre_detail = (req, res) => {
 };
 
 exports.genre_create_get = (req, res) => {
-	res.send('Not Implemented: genre Create Get');
+	res.render('genre/genre_create');
 };
 
 exports.genre_create_post = (req, res) => {
-	res.send('Not Implemented: genre Create Post');
+	var newGenre = new Genre({
+		name: req.body.genre_name
+	});
+	
+	newGenre.save((error) => {
+		if(error) {
+			res.render('genre/genre_create', {error: error.errors, data: req.body});
+		} else {
+			res.redirect('/catalog/genres');
+		}
+	});
+	// res.redirect('/catalog/genres'); //, {flash: `${req.body.genre_name} successfully created.`}
 };
 
 exports.genre_delete_get = (req, res) => {
