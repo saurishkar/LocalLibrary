@@ -25,11 +25,41 @@ exports.author_detail = (req, res) => {
 };
 
 exports.author_create_get = (req, res) => {
-	res.send('Not Implemented: Author Create Get');
+	res.render('author/author_create');
 };
 
 exports.author_create_post = (req, res) => {
-	res.send('Not Implemented: Author Create Post');
+	req.sanitize('first_name').escape().trim();
+	req.sanitize('family_name').escape().trim();
+	req.checkBody('first_name', 'First Name is Required').notEmpty();
+	req.checkBody('family_name', 'Family Name is Required').notEmpty();
+	
+	var errors = req.validationErrors();
+	
+	var newAuthor = new Author({
+		first_name: req.body.first_name,
+		family_name: req.body.family_name,
+		date_of_birth: req.body.date_of_birth,
+		date_of_death: req.body.date_of_death
+	});
+
+	if(errors) {
+		return res.render('author/author_create', {data: req.body, errors});
+	} else {
+		Author.findOne({first_name: req.body.first_name, family_name: req.body.family_name}).then((item) => {
+			if(item.first_name) {
+				req.checkBody('first_name', 'This Author already exists').custom(() => false);
+				errors = req.validationErrors();
+				if(errors) {
+					return res.render('author/author_create', {data: req.body, errors});
+				}
+			}
+			newAuthor.save().then(() => {
+				console.log('Auhtor has been created successfully');
+				res.redirect('/catalog/authors');
+			});
+		});
+	}
 };
 
 exports.author_delete_get = (req, res) => {
