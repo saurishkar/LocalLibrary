@@ -10,10 +10,9 @@ block content
 	if(data.length)
 		p The following is the list of all the genre of the books in the Local Library database :
 
-		ul(class="list-unstyled")
+		div(class="row")
 			each item in data
-				li(class="list-unstyled-item")
-					p 
-						a(href=item.url) #{item.name}
+				div(class="col-sm-2")
+					a(href=item.url) #{item.name}
 	else
 		p No Genre Available in the Database

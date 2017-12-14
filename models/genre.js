@@ -8,12 +8,6 @@ var newSchema = new Schema({
 		minLength: 3,
 		maxLength: 100,
 		required: true,
-		validate: {
-			validator: (v) => {
-				return v.length < 3 ? false: true;
-			},
-			message: '{VALUE} should be atleast 3 characters long'
-		}
 	}
 });
 

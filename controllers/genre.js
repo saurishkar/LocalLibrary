@@ -30,17 +30,32 @@ exports.genre_create_get = (req, res) => {
 };
 
 exports.genre_create_post = (req, res) => {
+	req.checkBody('genre_name', 'Genre Name Required').notEmpty();
+
+	req.sanitize('genre_name').escape();
+	req.sanitize('genre_name').trim();
+
+	req.checkBody('genre_name', 'Genre Name should only contain letters').isAlpha();
+	req.checkBody('genre_name', 'Genre Name should be atleast 3 characters and atmost 100 characters').isLength({min: 3, max: 100});
+	var errors = req.validationErrors();
 	var newGenre = new Genre({
-		name: req.body.genre_name
+		name: req.body.genre_name.toLowerCase()
 	});
-	
-	newGenre.save((error) => {
-		if(error) {
-			res.render('genre/genre_create', {error: error.errors, data: req.body});
-		} else {
-			res.redirect('/catalog/genres');
-		}
-	});
+	if(errors) {
+		return res.render('genre/genre_create', {data: req.body, errors});
+	} else {
+		Genre.findOne({name: req.body.genre_name.toLowerCase()}).then((item) => {
+			if(item) {
+				req.checkBody('genre_name', 'Genre Already Exists').custom(() => false);
+				errors = req.validationErrors();
+				if(errors)
+					return res.render('genre/genre_create', {data: req.body, errors});
+			}
+			newGenre.save().then(() => {
+				res.redirect('/catalog/genres');
+			});
+		});
+	}
 	// res.redirect('/catalog/genres'); //, {flash: `${req.body.genre_name} successfully created.`}
 };
 
