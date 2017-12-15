@@ -1,0 +1,71 @@
+extends ../layout
+
+block content
+
+	h1 Create Book
+	hr
+
+	div(class="row")
+		div(class="col-sm-6")
+			form(action="/catalog/book/create", method="POST", class="form-group")
+				label(for="book_title") Title
+				input(type="text", class="form-control", name="book_title", value=data ? data.book_title : '')
+				if(errors)
+					each error in errors
+						if(error.param === 'book_title')
+							div
+								span(class='text-danger') #{error.msg}
+				br
+				label(for="book_summary") Summary
+				textarea(type="text", rows="5", class="form-control", name="book_summary")
+					if(data && data.book_summary)
+						= data.book_summary
+
+				if(errors)
+					each error in errors
+						if(error.param === 'book_summary')
+							div
+								span(class='text-danger') #{error.msg}
+				br
+				label(for="book_isbn") ISBN
+				input(type="text", class="form-control", name="book_isbn", value=data ? data.book_isbn : '')
+				if(errors)
+					each error in errors
+						if(error.param === 'book_isbn')
+							div
+								span(class='text-danger') #{error.msg}
+				br
+				div(class="row")
+					div(class="col-sm-6")
+						label(for="book_genre") Select Genre
+						select(class="form-control", name="book_genre")
+							option(value=null) Select a Genre
+							each genre in data.genres
+								option(selected = data.book_genre && genre._id.toString().match(data.book_genre) ? true : false, value=genre._id)
+									= genre.name
+						div(class="text-center")
+							a(href="/catalog/genre/create", class="btn-primary btn-xs btn") Don't See your Genre ? Create Here
+						if(errors)
+							each error in errors
+								if(error.param === 'book_genre')
+									div
+										span(class='text-danger') #{error.msg}
+					div(class="col-sm-6")
+						label(for="book_author") Select Author
+						select(class="form-control", name="book_author")
+							option(value=null) Select an Author
+							each author in data.authors
+								option(selected = data.book_author && author.fullname.match(data.book_author) ? true : false, value=author._id)
+									= author.fullname
+						div(class="text-center")
+							a(href="/catalog/author/create", class="btn-primary btn-xs btn") Don't See your Author ? Create Here
+						if(errors)
+							each error in errors
+								if(error.param === 'book_author')
+									div
+										span(class='text-danger') #{error.msg}
+				br
+				div(class="btn-group")
+					button(class="btn btn-xs btn-primary", type="submit") Submit
+					a(href="/catalog/books", class="btn btn-danger btn-xs") Cancel
+

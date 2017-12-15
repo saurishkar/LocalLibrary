@@ -5,6 +5,8 @@ var router = express.Router();
 
 router.get('/books', book.book_list);
 
+router.get('/book/create', book.book_create_get);
+
 router.post('/book/create', book.book_create_post);
 
 router.get('/book/:id', book.book_detail);

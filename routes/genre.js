@@ -5,6 +5,8 @@ var router = express.Router();
 
 router.get('/genres', genre.genre_list);
 
+router.get('/genre/create', genre.genre_create_get);
+
 router.post('/genre/create', genre.genre_create_post);
 
 router.get('/genre/:id', genre.genre_detail);

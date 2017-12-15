@@ -5,9 +5,9 @@ var Schema = mongoose.Schema;
 var newSchema = new Schema({
 	name: {
 		type: String,
-		min: 3,
-		max: 100,
-		required: true
+		minLength: 3,
+		maxLength: 100,
+		required: true,
 	}
 });
 

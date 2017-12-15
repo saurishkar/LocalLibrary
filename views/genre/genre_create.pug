@@ -1,0 +1,20 @@
+extends ../layout
+
+block content
+
+	h1 Create a Genre
+	hr
+
+	div(class="row")
+		div(class="col-sm-6")
+			form(method="POST", action="", class="form-group")
+				label(for="genre_name") Genre Name
+				input(type="text", name="genre_name", class="form-control", value=data ? data.genre_name : '')
+				if(errors)
+					each error in errors
+						div(class="text-danger")
+							small #{error.msg}
+				br
+				div(class="btn-group")
+					button(class="btn btn-xs btn-primary", type="submit") Submit
+					a(class="btn btn-xs btn-danger", href="/catalog/genres") Cancel

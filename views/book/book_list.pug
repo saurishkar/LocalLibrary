@@ -2,9 +2,15 @@ extends ../layout
 
 block content
 	h1= title
+	div
+		a(class="btn btn-md btn-primary", href="/catalog/book/create") Add a Book
+	br
 
-	h5 The Following books are available in the Local Library database :
-	ol(class="list-unstyled")
-		each item in data
-			a(href=item.url) 
-				li #{item.title} (#{item.author.fullname})
+	if(data)
+		h5 The Following books are available in the Local Library database :
+		ol(class="list-unstyled")
+			each item in data
+				a(href=item.url) 
+					li #{item.title} (#{item.author.fullname})
+	else
+		No Books available in the Database.

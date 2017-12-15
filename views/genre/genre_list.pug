@@ -3,11 +3,16 @@ extends ../layout
 block content
 
 	h1= title
+	hr
+	div
+		a(class="btn btn-md btn-primary", href="/catalog/genre/create") Create A Genre
+	br
+	if(data.length)
+		p The following is the list of all the genre of the books in the Local Library database :
 
-	p The following is the list of all the genre of the books in the Local Library database :
-
-	ul(class="list-unstyled")
-		each item in data
-			li(class="list-unstyled-item")
-				p 
+		div(class="row")
+			each item in data
+				div(class="col-sm-2")
 					a(href=item.url) #{item.name}
+	else
+		p No Genre Available in the Database

@@ -1,0 +1,60 @@
+extends ../layout
+
+block content
+	
+	h1 New Book Instance
+	hr
+	div(class="row")
+		div(class="col-sm-6")
+			form(action="/catalog/bookinstance/create", method="POST")
+				label(for="bookinstance_book") Book Name
+				select(name="bookinstance_book", class="form-control")
+					option(value=null, selected=true) Select a Book
+					each book in data.books
+						option(selected= book._id.toString().match(data.bookinstance_book) ? true : false, value=book._id)
+							= book.title
+				if(errors)
+					each error in errors
+						if(error.param === "bookinstance_book")
+							div(class="text-danger")
+								span= error.msg
+
+				br
+				
+				label(for="bookinstance_status") Book Status
+				select(name="bookinstance_status", class="form-control")
+					option(value=null) Select a Status
+					option(class="text-success", value="Available", selected= data.bookinstance_status === 'Available' ? true : false) Available
+					option(class="text-danger", value="Loaned", selected= data.bookinstance_status === 'Loaned' ? true : false) Loaned
+					option(class="text-warning", value="Maintenance", selected= data.bookinstance_status === 'Maintenance' ? true : false) Maintenance
+					option(class="text-warning", value="Reserved", selected= data.bookinstance_status === 'Reserved' ? true : false) Reserved
+				if(errors)
+					each error in errors
+						if(error.param === "bookinstance_status")
+							div(class="text-danger")
+								span= error.msg
+				br
+				
+				label(for="bookinstance_imprint") Imprint
+				input(name="bookinstance_imprint", type="text", class="form-control", value = data.bookinstance_imprint)
+				if(errors)
+					each error in errors
+						if(error.param === "bookinstance_imprint")
+							div(class="text-danger")
+								span= error.msg
+				br
+
+				label(for="bookinstance_dueback") Due Back
+				input(name="bookinstance_dueback", type="date", class="form-control", value= data.bookinstance_dueback, disabled= data.bookinstance_status && data.bookinstance_status.match(/Available/) ? true : false)
+				if(errors)
+					each error in errors
+						if(error.param === "bookinstance_dueback")
+							div(class="text-danger")
+								span= error.msg
+				br
+
+				div(class="btn-group")
+					button(class="btn btn-xs btn-primary", type="submit") Submit
+					a(class="btn btn-xs btn-danger", href="/catalog/bookinstances") Cancel
+				br
+

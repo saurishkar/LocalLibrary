@@ -1,0 +1,46 @@
+extends ../layout
+
+block content
+
+	h1 Create Author
+	hr
+	div(class="row")
+		form(action="/catalog/author/create", method="POST", class="form-group")
+			div(class="col-sm-6")
+				div(class="row")
+					div(class="col-sm-6")
+						label(for="first_name") First Name
+						input(type="text", class="form-control", name="first_name", value=data ? data.first_name : '')
+						if(errors)
+							each error in errors
+								if(error.param === 'first_name')
+									div
+										span(class="text-danger") #{error.msg}
+					div(class="col-sm-6")
+						label(for="family_name") Family Name
+						input(type="text", class="form-control", name="family_name", value=data ? data.family_name : '')
+						if(errors)
+							each error in errors
+								if(error.param === 'family_name')
+									div
+										span(class="text-danger") #{error.msg}
+				br
+				label(for="data_of_birth") Date of Birth
+				input(type="date", class="form-control", name="date_of_birth", value=data ? data.date_of_birth : '')
+				if(errors)
+					each error in errors
+						if(error.param === 'date_of_birth')
+							div
+								span(class="text-danger") #{error.msg}
+				br
+				label(for="date_of_death") Date of Death
+				input(type="date", class="form-control", name="date_of_death", value=data ? data.date_of_death : '')
+				if(errors)
+					each error in errors
+						if(error.param === 'date_of_death')
+							div
+								span(class="text-danger") #{error.msg}
+				br
+				div(class="btn-group")
+					button(class="btn btn-sm btn-primary", type="submit") Submit
+					a(class="btn btn-sm btn-danger", href="/catalog/authors") Cancel
