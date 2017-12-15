@@ -93,9 +93,16 @@ exports.book_create_post = (req, res) => {
 			if(errors) {
 				return res.render('book/book_create', {data, errors});
 			}
-			var book = req.body;
-			console.log(book);
-			res.send(book);
+			var book = new Book({
+				title: req.body.book_title,
+				summary: req.body.book_summary,
+				isbn: req.body.book_isbn,
+				author: new ObjectID(req.body.book_author),
+				genre: new ObjectID(req.body.book_genre)
+			});
+			book.save().then(() => {
+				res.redirect('/catalog/books');
+			});
 		}, (e) => {
 			res.render('book/book_create', {error: e});
 		}, (e) => {
