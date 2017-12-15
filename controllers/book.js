@@ -1,9 +1,13 @@
-var Book = require('../models/book');
 var { ObjectID } = require('mongodb');
+
+var Book = require('../models/book');
+var Genre = require('../models/genre');
+var Author = require('../models/author');
 var BookInstance = require('../models/book-instance');
 
 exports.book_list = (req, res) => {
 	Book.find({}).populate('author').then((docs) => {
+		console.log('book-list', docs);
 		res.render('book/book_list', {title: 'Book Listing Page', data: docs});
 	}, (e) => {
 		res.render('book/book_list', {title: 'Book Listing Page', error: e});
@@ -30,7 +34,19 @@ exports.book_detail = (req, res) => {
 };
 
 exports.book_create_get = (req, res) => {
-	res.send('Not Implemented: book Create Get');
+	var data = {};
+	Genre.find({}).then((genres) => {
+		data.genres = genres;
+		Author.find({}).then((authors) => {
+			data.authors = authors;
+			res.render('book/book_create', {data: data});
+		}, (e) => {
+			res.render('book/book_create', {error: e});
+		}, (e) => {
+			res.render('book/book_create', {error: e});
+		});
+	});
+	// res.send('Not Implemented: book Create Get');
 };
 
 exports.book_create_post = (req, res) => {
