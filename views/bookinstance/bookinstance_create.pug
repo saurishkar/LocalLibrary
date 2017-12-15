@@ -11,7 +11,7 @@ block content
 				select(name="bookinstance_book", class="form-control")
 					option(value=null, selected=true) Select a Book
 					each book in data.books
-						option(selected= book._id.toString().match(data.bookinstance_book) ? true : false, value=book._id)
+						option(selected= data.bookinstance_book && book._id.toString().match(data.bookinstance_book) ? true : false, value=book._id)
 							= book.title
 				if(errors)
 					each error in errors
