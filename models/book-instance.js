@@ -11,7 +11,6 @@ var newSchema = new Schema({
 	},
 	due_back: {
 		type: Date,
-		required: true,
 		default: Date.now(),
 	},
 	status: {

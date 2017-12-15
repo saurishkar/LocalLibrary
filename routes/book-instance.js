@@ -6,6 +6,8 @@ var router = express.Router();
 
 router.get('/bookinstances', bookInstance.bookinstance_list);
 
+router.get('/bookinstance/create', bookInstance.bookinstance_create_get);
+
 router.post('/bookinstance/create', bookInstance.bookinstance_create_post);
 
 router.get('/bookinstance/:id', bookInstance.bookinstance_detail);
