@@ -74,7 +74,15 @@ exports.book_create_post = (req, res) => {
 		return true;
 	});
 
-	req.checkBody('book_isbn', 'Invalid ISBN').isISBN();
+	req.checkBody('book_isbn', 'ISBN should be 10-Digit Numeric value').custom((value) => {
+		if(value.length !== 10) {
+			return false;
+		}
+		if(!value.match(/\d/)) {
+			return false;
+		}
+		return true;
+	});
 	var data = req.body;
 	Genre.find({}).then((genres) => {
 		data.genres = genres;
@@ -83,11 +91,11 @@ exports.book_create_post = (req, res) => {
 			var errors = req.validationErrors();
 
 			if(errors) {
-				console.log('errors', errors);
-				console.log('data entered', data);
 				return res.render('book/book_create', {data, errors});
 			}
-			res.send('Successfully submitted book details');
+			var book = req.body;
+			console.log(book);
+			res.send(book);
 		}, (e) => {
 			res.render('book/book_create', {error: e});
 		}, (e) => {

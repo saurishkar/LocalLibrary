@@ -17,7 +17,10 @@ block content
 								span(class='text-danger') #{error.msg}
 				br
 				label(for="book_summary") Summary
-				textarea(type="text", rows="5", class="form-control", name="book_summary", value=data ? data.book_summary : '')
+				textarea(type="text", rows="5", class="form-control", name="book_summary")
+					if(data && data.book_summary)
+						= data.book_summary
+
 				if(errors)
 					each error in errors
 						if(error.param === 'book_summary')
@@ -38,8 +41,8 @@ block content
 						select(class="form-control", name="book_genre")
 							option(value=null) Select a Genre
 							each genre in data.genres
-								option(selected = data.book_genre && genre.name.match(data.book_genre) ? true : false)
-									span #{genre.name}
+								option(selected = data.book_genre && genre._id.toString().match(data.book_genre) ? true : false, value=genre._id)
+									= genre.name
 						div(class="text-center")
 							a(href="/catalog/genre/create", class="btn-primary btn-xs btn") Don't See your Genre ? Create Here
 						if(errors)
@@ -52,8 +55,8 @@ block content
 						select(class="form-control", name="book_author")
 							option(value=null) Select an Author
 							each author in data.authors
-								option(selected = data.book_author && author.fullname.match(data.book_author) ? true : false)
-									span #{author.fullname}
+								option(selected = data.book_author && author.fullname.match(data.book_author) ? true : false, value=author._id)
+									= author.fullname
 						div(class="text-center")
 							a(href="/catalog/author/create", class="btn-primary btn-xs btn") Don't See your Author ? Create Here
 						if(errors)
