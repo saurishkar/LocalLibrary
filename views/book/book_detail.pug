@@ -5,7 +5,9 @@ block content
 	h1= data.book[0].title
 
 	h4 #{data.book[0].author.fullname}
-
+	
+	a(href=`/catalog/book/${data.book[0]._id}/update`, class="btn btn-xs btn-primary") Update
+	a(href=`/catalog/book/${data.book[0]._id}/delete`, class="btn btn-xs btn-danger") Delete This Book
 	hr
 	h4(class="text-danger") Summary :
 	p #{data.book[0].summary}

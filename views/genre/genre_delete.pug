@@ -1,0 +1,22 @@
+extends ../layout
+
+block content
+	h1 Delete 
+		= data.genre.name 
+	if(data)
+		if(data.books.length > 0)
+			h4 The following books must be removed from this Genre before Genre can be deleted : 
+			ul
+				each item in data.books
+					li
+						a(href=item.url)
+							h5(class="text-primary")= item.title
+			br
+		else
+			form(class="form-group", action=`/catalog/genre/${data.genre._id}/delete`, method="POST")
+				h4(class="text-primary") This will delete this Genre permanently.
+				p(class="text-primary") Are you sure you want to proceed ?
+				br
+				div(class="btn-group")
+					button(class="btn btn-xs btn-danger", type="Submit") Delete
+					a(class="btn btn-xs btn-default", href="/catalog/genres") Cancel

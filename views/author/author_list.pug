@@ -3,7 +3,8 @@ extends ../layout
 block content
 
 	h1= title
-
+	hr
+	
 	div
 		a(class="btn btn-md btn-primary", href="/catalog/author/create") Create Author
 	br
@@ -16,3 +17,4 @@ block content
 					strong 
 						a(href=item.url) #{item.fullname}
 					p ( #{item.timeline_format} )
+				

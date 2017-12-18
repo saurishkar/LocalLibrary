@@ -21,15 +21,16 @@ block content
 						span 
 							strong  ISBN: #{item.book.isbn} 
 						
-					if (item.status === 'Available')
-						div(class="btn btn-xs btn-success") #{item.status}
+					p
+						if (item.status === 'Available')
+							div(class="btn btn-xs btn-success") #{item.status}
 
-					else if (item.status === 'Loaned')
-						div(class="btn btn-xs btn-danger") #{item.status}
-						div(class="btn btn-xs btn-primary")  ( Due : #{item.due_back_format} )
-					else 
-						div(class="btn btn-xs btn-warning") #{item.status}
-						div(class="btn btn-xs btn-primary")  ( Due : #{item.due_back_format} )
+						else if (item.status === 'Loaned')
+							div(class="btn btn-xs btn-danger") #{item.status}
+							div(class="btn btn-xs btn-primary")  ( Due : #{item.due_back_format} )
+						else 
+							div(class="btn btn-xs btn-warning") #{item.status}
+							div(class="btn btn-xs btn-primary")  ( Due : #{item.due_back_format} )
 
 	else
 		No Available Instances for this Book. 

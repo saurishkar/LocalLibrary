@@ -2,16 +2,16 @@ extends ../layout
 
 block content
 	
-	h1 New Book Instance
+	h1 Update Book Instance
 	hr
 	div(class="row")
 		div(class="col-sm-6")
-			form(action="/catalog/bookinstance/create", method="POST")
+			form(action=`/catalog/bookinstance/${data.bookinstance._id}/update`, method="POST")
 				label(for="book") Book Name
 				select(name="book", class="form-control")
 					option(value=null, selected=true) Select a Book
 					each book in data.books
-						option(selected= data && data.bookinstance && book._id.toString().match(data.bookinstance.book) ? true : false, value=book._id)
+						option(selected= data && data.bookinstance.book && book._id.toString().match(data.bookinstance.book) ? true : false, value=book._id)
 							= book.title
 				if(errors)
 					each error in errors
@@ -24,10 +24,10 @@ block content
 				label(for="status") Book Status
 				select(name="status", class="form-control")
 					option(value=null) Select a Status
-					option(class="text-success", value="Available", selected= data.bookinstance && data.bookinstance.status === 'Available' ? true : false) Available
-					option(class="text-danger", value="Loaned", selected= data.bookinstance && data.bookinstance.status === 'Loaned' ? true : false) Loaned
-					option(class="text-warning", value="Maintenance", selected= data.bookinstance && data.bookinstance.status === 'Maintenance' ? true : false) Maintenance
-					option(class="text-warning", value="Reserved", selected= data.bookinstance && data.bookinstance.status === 'Reserved' ? true : false) Reserved
+					option(class="text-success", value="Available", selected= data.bookinstance.status === 'Available' ? true : false) Available
+					option(class="text-danger", value="Loaned", selected= data.bookinstance.status === 'Loaned' ? true : false) Loaned
+					option(class="text-warning", value="Maintenance", selected= data.bookinstance.status === 'Maintenance' ? true : false) Maintenance
+					option(class="text-warning", value="Reserved", selected= data.bookinstance.status === 'Reserved' ? true : false) Reserved
 				if(errors)
 					each error in errors
 						if(error.param === "status")
@@ -36,7 +36,7 @@ block content
 				br
 				
 				label(for="imprint") Imprint
-				input(name="imprint", type="text", class="form-control", value = data.bookinstance && data.bookinstance.imprint)
+				input(name="imprint", type="text", class="form-control", value = data.bookinstance.imprint)
 				if(errors)
 					each error in errors
 						if(error.param === "imprint")
@@ -45,7 +45,7 @@ block content
 				br
 
 				label(for="dueback") Due Back
-				input(name="dueback", type="date", class="form-control", value= data.bookinstance && data.bookinstance.dueback, disabled= data && data.bookinstance && data.bookinstance.status.match(/Available/) ? true : false)
+				input(name="dueback", type="date", class="form-control", value= data.bookinstance.dueback, disabled= data && data.bookinstance.status && data.bookinstance.status.match(/Available/) ? true : false)
 				if(errors)
 					each error in errors
 						if(error.param === "dueback")

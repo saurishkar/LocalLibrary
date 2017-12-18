@@ -1,0 +1,23 @@
+extends ../layout
+
+block content
+
+	h1 Delete Book
+	hr
+	if(data)
+		if(data.bookinstances)
+			p The following are the Book Instances present in the LocalLibrary Database :
+			ol
+				each item in data.bookinstances
+					li
+						ol(class="list-unstyled")
+							li(class="text-primary")= item.imprint
+							li= item.status
+						br
+
+		form(action=`/catalog/book/${data.book._id}/delete`, method="POST", class="form-group")
+			h4(class="text-danger") This will Delete all the Instances of the book as well.
+			p(class="text-primary") Are you sure you want to proceed ?
+			div(class="btn-group")
+				button(class="btn btn-xs btn-danger", type="submit") Delete
+				a(href="/catalog/books", class="btn btn-xs btn-default") Cancel
