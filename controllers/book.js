@@ -138,14 +138,14 @@ exports.book_delete_post = (req, res) => {
 };
 
 exports.book_update_get = (req, res) => {
-	var data = {page_title: 'Update', action: 'update'};
+	var data = {};
 	Book.findById(req.params.id).then((book) => {
 		data = Object.assign({}, data, {book});
 		Author.find({}).then((authors) => {
 			data.authors = authors;
 			Genre.find({}).then((genres) => {
 				data.genres = genres;
-				res.render('book/book_create', {data});
+				res.render('book/book_update', {data});
 			}, (e) => {
 				res.send('There was a problem fetching genres for the book');
 			});
@@ -191,16 +191,16 @@ exports.book_update_post = (req, res) => {
 		}
 		return true;
 	});
-	var data = Object.assign({}, {book: req.body}, {page_title: 'Update', action: 'update'});
+	var data = Object.assign({}, {book: req.body});
 	Genre.find({}).then((genres) => {
 		data.genres = genres;
 		Author.find({}).then((authors) => {
 			data.authors = authors;
 			var errors = req.validationErrors();
 			if(errors) {
-				return res.render('book/book_create', {data, errors});
+				return res.render('book/book_update', {data, errors});
 			}
-			
+
 			Book.updateOne(
 				{_id: new ObjectID(req.params.id)}, {
 					title: req.body.title,
@@ -213,9 +213,9 @@ exports.book_update_post = (req, res) => {
 					res.redirect('/catalog/books');
 				});
 		}, (e) => {
-			res.render('book/book_create', {error: e});
+			res.render('book/book_update', {error: e});
 		}, (e) => {
-			res.render('book/book_create', {error: e});
+			res.render('book/book_update', {error: e});
 		});
 	});
 };

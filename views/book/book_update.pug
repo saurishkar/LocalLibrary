@@ -2,12 +2,12 @@ extends ../layout
 
 block content
 
-	h1 Create Book
+	h1 Update Book
 	hr
 
 	div(class="row")
 		div(class="col-sm-6")
-			form(action='/catalog/book/create', method="POST", class="form-group")
+			form(action=`/catalog/book/${data.book._id}/update`, method="POST", class="form-group")
 				label(for="title") Title
 				input(type="text", class="form-control", name="title", value=data && data.book ? data.book.title : '')
 				if(errors)
