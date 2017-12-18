@@ -12,7 +12,9 @@ router.post('/bookinstance/create', bookInstance.bookinstance_create_post);
 
 router.get('/bookinstance/:id', bookInstance.bookinstance_detail);
 
-router.patch('/bookinstance/:id/update', bookInstance.bookinstance_update_post);
+router.get('/bookinstance/:id/update', bookInstance.bookinstance_update_get);
+
+router.post('/bookinstance/:id/update', bookInstance.bookinstance_update_post);
 
 router.get('/bookinstance/:id/delete', bookInstance.bookinstance_delete_get);
 
