@@ -87,14 +87,14 @@ exports.author_create_post = (req, res) => {
 	});
 
 	if(errors) {
-		return res.render('author/author_create', {data: req.body, errors});
+		return res.render('author/author_create', {data: {author: req.body}, errors});
 	} else {
 		Author.findOne({first_name: req.body.first_name, family_name: req.body.family_name}).then((item) => {
 			if(item) {
 				req.checkBody('first_name', 'This Author already exists').custom(() => false);
 				errors = req.validationErrors();
 				if(errors) {
-					return res.render('author/author_create', {data: req.body, errors});
+					return res.render('author/author_create', {data: {author: req.body}, errors});
 				}
 			}
 			newAuthor.save().then(() => {
