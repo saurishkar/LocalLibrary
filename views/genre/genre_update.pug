@@ -2,14 +2,14 @@ extends ../layout
 
 block content
 
-	h1 Create a Genre
+	h1 Update Genre
 	hr
 
 	div(class="row")
 		div(class="col-sm-6")
-			form(method="POST", action='/catalog/genre/create', class="form-group")
+			form(method="POST", action=`/catalog/genre/${data.genre._id}/update`, class="form-group")
 				label(for="name") Genre Name
-				input(type="text", name="name", class="form-control", value=data ? data.genre.name : '')
+				input(type="text", name="name", class="form-control", value=data && data.genre ? data.genre.name : '')
 				if(errors)
 					each error in errors
 						div(class="text-danger")

@@ -11,7 +11,9 @@ router.post('/genre/create', genre.genre_create_post);
 
 router.get('/genre/:id', genre.genre_detail);
 
-router.patch('/genre/:id/update', genre.genre_update_post);
+router.get('/genre/:id/update', genre.genre_update_get);
+
+router.post('/genre/:id/update', genre.genre_update_post);
 
 router.get('/genre/:id/delete', genre.genre_delete_get);
 
