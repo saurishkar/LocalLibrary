@@ -1,5 +1,8 @@
+var { ObjectID } = require('mongodb');
+
 var Author = require('../models/author');
 var Book = require('../models/book');
+var BookInstance = require('../models/book-instance');
 
 exports.author_list = (req, res) => {
 	Author.find({}).then((docs) => {
@@ -95,7 +98,7 @@ exports.author_create_post = (req, res) => {
 				}
 			}
 			newAuthor.save().then(() => {
-				console.log('Auhtor has been created successfully');
+				console.log('Author has been created successfully');
 				res.redirect('/catalog/authors');
 			});
 		});
@@ -103,11 +106,43 @@ exports.author_create_post = (req, res) => {
 };
 
 exports.author_delete_get = (req, res) => {
-	res.send('Not Implemented: Author Delete Get');
+	var data = {};
+	// console.log(req.body);
+	Author.findById(req.params.id).then((item) => {
+		data.author = item;
+		Book.find({author: req.params.id}).then((books) => {
+			data.books = books;
+			res.render('author/author_delete', {data});
+		}, (e) => {
+			res.send('There was an error fetching data from the server');
+		});
+	}, (e) => {
+		res.send('There was an error fetching author data from the server');
+	});
 };
 
 exports.author_delete_post = (req, res) => {
-	res.send('Not Implemented: Author Delete Post');
+	Book.find({author: req.params.id}).then((books) => {
+		if(books.length > 0) {
+			books.map((book) => {
+				BookInstance.deleteMany({book: book._id}).then(() => {
+					Book.deleteOne({_id: new ObjectID(book._id)}).then(() => {
+						Book.find({author: req.params.id}).then((books) => {
+							if(books.length === 0) {
+								Author.deleteOne({_id: new ObjectID(req.params.id)}).then(() => {
+									res.redirect('/catalog/authors');
+								});
+							}
+						});
+					});
+				});
+			});
+		} else {
+			Author.deleteOne({_id: new ObjectID(req.params.id)}).then(() => {
+				res.redirect('/catalog/authors');
+			});
+		}
+	});
 };
 
 exports.author_update_get = (req, res) => {

@@ -7,7 +7,6 @@ var BookInstance = require('../models/book-instance');
 
 exports.book_list = (req, res) => {
 	Book.find({}).populate('author').then((docs) => {
-		console.log('book-list', docs);
 		res.render('book/book_list', {title: 'Book Listing Page', data: docs});
 	}, (e) => {
 		res.render('book/book_list', {title: 'Book Listing Page', error: e});

@@ -16,3 +16,5 @@ block content
 					strong 
 						a(href=item.url) #{item.fullname}
 					p ( #{item.timeline_format} )
+					a(href=`/catalog/author/${item._id}/delete`, class="btn btn-xs btn-danger") Delete this Author
+				br

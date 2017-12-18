@@ -18,6 +18,6 @@ router.patch('/author/:id/update', author.author_update_post);
 
 router.get('/author/:id/delete', author.author_delete_get);
 
-router.delete('/author/:id/delete', author.author_delete_post);
+router.post('/author/:id/delete', author.author_delete_post);
 
 module.exports = router;
