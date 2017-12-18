@@ -2,7 +2,8 @@ extends ../layout
 
 block content
 	h1 #{title} - #{data.genre.name}
-
+	a(class="btn btn-xs btn-danger", href=`/catalog/genre/${data.genre._id}/delete`, style="float:right") Delete this Genre
+	hr
 	if (data.books.length)
 		p The following are the books of this genre in Local Library database :
 		ul(class="list-group")

@@ -1,3 +1,5 @@
+var {ObjectID} = require('mongodb');
+
 var Genre = require('../models/genre');
 var Book = require('../models/book');
 
@@ -60,11 +62,26 @@ exports.genre_create_post = (req, res) => {
 };
 
 exports.genre_delete_get = (req, res) => {
-	res.send('Not Implemented: genre Delete Get');
+	var data = {};
+	Genre.findById(req.params.id).then((genreItem) => {
+		data.genre = genreItem;
+		Book.find({genre: req.params.id}).then((books) => {
+			data.books = books;
+			res.render('genre/genre_delete', {data});	
+		}, (e) => {
+			res.send('There was a problem deleting all the book records for the genre');
+		});
+	}, (e) => {
+		res.send('There was a problem fetching the genre details');
+	});
 };
 
 exports.genre_delete_post = (req, res) => {
-	res.send('Not Implemented: genre Delete Post');
+	Genre.deleteOne({_id: new ObjectID(req.params.id)}).then(() => {
+		res.redirect('/catalog/genres');
+	}, (e) => {
+		res.send('There was a problem fetching the genre details');
+	});
 };
 
 exports.genre_update_get = (req, res) => {

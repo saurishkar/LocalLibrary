@@ -13,7 +13,6 @@ block content
 				div
 					a(href=item.url) 
 						li #{item.title} (#{item.author.fullname})
-					a(href=`/catalog/book/${item._id}/delete`, class="btn btn-xs btn-danger") Delete This Book
 				br
 	else
 		No Books available in the Database.

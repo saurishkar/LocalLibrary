@@ -13,6 +13,8 @@ router.get('/genre/:id', genre.genre_detail);
 
 router.patch('/genre/:id/update', genre.genre_update_post);
 
-router.delete('/genre/:id/delete', genre.genre_delete_post);
+router.get('/genre/:id/delete', genre.genre_delete_get);
+
+router.post('/genre/:id/delete', genre.genre_delete_post);
 
 module.exports = router;

@@ -6,6 +6,7 @@ block content
 
 	h2(class="text-danger") #{data.author.fullname}
 	h4 ( #{data.author.timeline_format} )
+	a(href=`/catalog/author/${data.author._id}/delete`, class="btn btn-xs btn-danger", style="float:right") Delete this Author
 	hr
 
 	h3 Books
