@@ -10,7 +10,10 @@ block content
 		h5 The Following books are available in the Local Library database :
 		ol(class="list-unstyled")
 			each item in data
-				a(href=item.url) 
-					li #{item.title} (#{item.author.fullname})
+				div
+					a(href=item.url) 
+						li #{item.title} (#{item.author.fullname})
+					a(href=`/catalog/book/${item._id}/delete`, class="btn btn-xs btn-danger") Delete This Book
+				br
 	else
 		No Books available in the Database.

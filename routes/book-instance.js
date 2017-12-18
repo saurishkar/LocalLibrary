@@ -14,6 +14,8 @@ router.get('/bookinstance/:id', bookInstance.bookinstance_detail);
 
 router.patch('/bookinstance/:id/update', bookInstance.bookinstance_update_post);
 
-router.delete('/bookinstance/:id/delete', bookInstance.bookinstance_delete_post);
+router.get('/bookinstance/:id/delete', bookInstance.bookinstance_delete_get);
+
+router.post('/bookinstance/:id/delete', bookInstance.bookinstance_delete_post);
 
 module.exports = router;

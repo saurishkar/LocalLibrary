@@ -99,11 +99,21 @@ exports.bookinstance_create_post = (req, res) => {
 };
 
 exports.bookinstance_delete_get = (req, res) => {
-	res.send('Not Implemented: bookinstance Delete Get');
+	var data = {};
+	BookInstance.findById(req.params.id).then((instance) => {
+		data.instance = instance;
+		res.render('bookinstance/bookinstance_delete', {data});
+	}, (e) => {
+		res.send('There was a prolem fetching the details of the Book instance');
+	});
 };
 
 exports.bookinstance_delete_post = (req, res) => {
-	res.send('Not Implemented: bookinstance Delete Post');
+	BookInstance.deleteOne({_id: new ObjectID(req.params.id)}).then(() => {
+		res.redirect('/catalog/bookinstances');
+	}, (e) => {
+		res.send('There was a problem deleting the book instance');
+	});
 };
 
 exports.bookinstance_update_get = (req, res) => {

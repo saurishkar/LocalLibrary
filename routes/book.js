@@ -13,6 +13,8 @@ router.get('/book/:id', book.book_detail);
 
 router.patch('/book/:id/update', book.book_update_post);
 
-router.delete('/book/:id/delete', book.book_delete_post);
+router.get('/book/:id/delete', book.book_delete_get);
+
+router.post('/book/:id/delete', book.book_delete_post);
 
 module.exports = router;

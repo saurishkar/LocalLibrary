@@ -111,11 +111,30 @@ exports.book_create_post = (req, res) => {
 };
 
 exports.book_delete_get = (req, res) => {
-	res.send('Not Implemented: book Delete Get');
+	var data = {};
+	Book.findById(req.params.id).then((book) => {
+		data.book = book;
+		BookInstance.find({book: req.params.id}).then((instances) => {
+			data.bookinstances = instances;
+			res.render('book/book_delete', {data});
+		});
+	});
 };
 
 exports.book_delete_post = (req, res) => {
-	res.send('Not Implemented: book Delete Post');
+	Book.findById(req.params.id).then((book) => {
+		BookInstance.deleteMany({book: book._id}).then(() => {
+			Book.deleteOne({_id: new ObjectID(book._id)}).then(() => {
+				res.redirect('/catalog/books');
+			}, (e) => {
+				res.send('There was a problem deleting the Book record');
+			});
+		}, (e) => {
+			res.send('There was a problem processing the request');
+		});
+	}, (e) => {
+		res.send('There was a problem fetching the Book details');
+	});
 };
 
 exports.book_update_get = (req, res) => {
