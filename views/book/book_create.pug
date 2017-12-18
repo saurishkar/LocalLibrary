@@ -2,66 +2,66 @@ extends ../layout
 
 block content
 
-	h1 Create Book
+	h1 #{`${data.page_title} Book`}
 	hr
 
 	div(class="row")
 		div(class="col-sm-6")
-			form(action="/catalog/book/create", method="POST", class="form-group")
-				label(for="book_title") Title
-				input(type="text", class="form-control", name="book_title", value=data ? data.book_title : '')
+			form(action= data.action === 'create' ? '/catalog/book/create' : `/catalog/book/${data.book._id}/update`, method="POST", class="form-group")
+				label(for="title") Title
+				input(type="text", class="form-control", name="title", value=data && data.book ? data.book.title : '')
 				if(errors)
 					each error in errors
-						if(error.param === 'book_title')
+						if(error.param === 'title')
 							div
 								span(class='text-danger') #{error.msg}
 				br
-				label(for="book_summary") Summary
-				textarea(type="text", rows="5", class="form-control", name="book_summary")
-					if(data && data.book_summary)
-						= data.book_summary
+				label(for="summary") Summary
+				textarea(type="text", rows="5", class="form-control", name="summary")
+					if(data && data.book)
+						= data.book.summary
 
 				if(errors)
 					each error in errors
-						if(error.param === 'book_summary')
+						if(error.param === 'summary')
 							div
 								span(class='text-danger') #{error.msg}
 				br
-				label(for="book_isbn") ISBN
-				input(type="text", class="form-control", name="book_isbn", value=data ? data.book_isbn : '')
+				label(for="isbn") ISBN
+				input(type="text", class="form-control", name="isbn", value=data && data.book ? data.book.isbn : '')
 				if(errors)
 					each error in errors
-						if(error.param === 'book_isbn')
+						if(error.param === 'isbn')
 							div
 								span(class='text-danger') #{error.msg}
 				br
 				div(class="row")
 					div(class="col-sm-6")
-						label(for="book_genre") Select Genre
-						select(class="form-control", name="book_genre")
+						label(for="genre") Select Genre
+						select(class="form-control", name="genre")
 							option(value=null) Select a Genre
 							each genre in data.genres
-								option(selected = data.book_genre && genre._id.toString().match(data.book_genre) ? true : false, value=genre._id)
+								option(selected = data && data.book && genre._id.toString().match(data.book.genre) ? true : false, value=genre._id)
 									= genre.name
 						div(class="text-center")
 							a(href="/catalog/genre/create", class="btn-primary btn-xs btn") Don't See your Genre ? Create Here
 						if(errors)
 							each error in errors
-								if(error.param === 'book_genre')
+								if(error.param === 'genre')
 									div
 										span(class='text-danger') #{error.msg}
 					div(class="col-sm-6")
-						label(for="book_author") Select Author
-						select(class="form-control", name="book_author")
+						label(for="author") Select Author
+						select(class="form-control", name="author")
 							option(value=null) Select an Author
 							each author in data.authors
-								option(selected = data.book_author && author.fullname.match(data.book_author) ? true : false, value=author._id)
+								option(selected = data && data.book && author._id.toString().match(data.book.author) ? true : false, value=author._id)
 									= author.fullname
 						div(class="text-center")
 							a(href="/catalog/author/create", class="btn-primary btn-xs btn") Don't See your Author ? Create Here
 						if(errors)
 							each error in errors
-								if(error.param === 'book_author')
+								if(error.param === 'author')
 									div
 										span(class='text-danger') #{error.msg}
 				br

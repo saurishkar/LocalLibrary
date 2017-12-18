@@ -33,7 +33,7 @@ exports.book_detail = (req, res) => {
 };
 
 exports.book_create_get = (req, res) => {
-	var data = {};
+	var data = {page_title: 'Create', action: 'create'};
 	Genre.find({}).then((genres) => {
 		data.genres = genres;
 		Author.find({}).then((authors) => {
@@ -49,31 +49,31 @@ exports.book_create_get = (req, res) => {
 };
 
 exports.book_create_post = (req, res) => {
-	req.sanitize('book_title').escape();
-	req.sanitize('book_title').trim();
+	req.sanitize('title').escape();
+	req.sanitize('title').trim();
 
-	req.sanitize('book_summary').escape();
-	req.sanitize('book_summary').trim();
+	req.sanitize('summary').escape();
+	req.sanitize('summary').trim();
 
-	req.sanitize('book_isbn').escape();
-	req.sanitize('book_isbn').trim();
+	req.sanitize('isbn').escape();
+	req.sanitize('isbn').trim();
 
-	req.checkBody('book_title', 'Title is Required').notEmpty();
-	req.checkBody('book_summary', 'Summary is Required').notEmpty();
-	req.checkBody('book_author', 'Author is Required').custom((value) => {
+	req.checkBody('title', 'Title is Required').notEmpty();
+	req.checkBody('summary', 'Summary is Required').notEmpty();
+	req.checkBody('author', 'Author is Required').custom((value) => {
 		if(value.match(/Select an Author/) || value === '') {
 			return false;
 		}
 		return true;
 	});
-	req.checkBody('book_genre', 'Genre is Required').custom((value) => {
+	req.checkBody('genre', 'Genre is Required').custom((value) => {
 		if(value.match(/Select a Genre/) || value === '') {
 			return false;
 		}
 		return true;
 	});
 
-	req.checkBody('book_isbn', 'ISBN should be 10-Digit Numeric value').custom((value) => {
+	req.checkBody('isbn', 'ISBN should be 10-Digit Numeric value').custom((value) => {
 		if(value.length !== 10) {
 			return false;
 		}
@@ -82,7 +82,7 @@ exports.book_create_post = (req, res) => {
 		}
 		return true;
 	});
-	var data = req.body;
+	var data = Object.assign({}, data, {book: req.body}, {page_title: 'Create', action: 'create'});
 	Genre.find({}).then((genres) => {
 		data.genres = genres;
 		Author.find({}).then((authors) => {
@@ -93,11 +93,11 @@ exports.book_create_post = (req, res) => {
 				return res.render('book/book_create', {data, errors});
 			}
 			var book = new Book({
-				title: req.body.book_title,
-				summary: req.body.book_summary,
-				isbn: req.body.book_isbn,
-				author: new ObjectID(req.body.book_author),
-				genre: new ObjectID(req.body.book_genre)
+				title: req.body.title,
+				summary: req.body.summary,
+				isbn: req.body.isbn,
+				author: new ObjectID(req.body.author),
+				genre: new ObjectID(req.body.genre)
 			});
 			book.save().then(() => {
 				res.redirect('/catalog/books');
@@ -138,11 +138,86 @@ exports.book_delete_post = (req, res) => {
 };
 
 exports.book_update_get = (req, res) => {
-	res.send('Not Implemented: book Update Get');
+	var data = {page_title: 'Update', action: 'update'};
+	Book.findById(req.params.id).then((book) => {
+		data = Object.assign({}, data, {book});
+		Author.find({}).then((authors) => {
+			data.authors = authors;
+			Genre.find({}).then((genres) => {
+				data.genres = genres;
+				res.render('book/book_create', {data});
+			}, (e) => {
+				res.send('There was a problem fetching genres for the book');
+			});
+		}, (e) => {
+			res.send('There was a problem fetching authors for the book');
+		});
+	}, (e) => {
+		res.send('There was a problem fetching the book details');
+	});
 };
 
 exports.book_update_post = (req, res) => {
-	res.send('Not Implemented: book Update Post');
+	req.sanitize('title').escape();
+	req.sanitize('title').trim();
+
+	req.sanitize('summary').escape();
+	req.sanitize('summary').trim();
+
+	req.sanitize('isbn').escape();
+	req.sanitize('isbn').trim();
+
+	req.checkBody('title', 'Title is Required').notEmpty();
+	req.checkBody('summary', 'Summary is Required').notEmpty();
+	req.checkBody('author', 'Author is Required').custom((value) => {
+		if(value.match(/Select an Author/) || value === '') {
+			return false;
+		}
+		return true;
+	});
+	req.checkBody('genre', 'Genre is Required').custom((value) => {
+		if(value.match(/Select a Genre/) || value === '') {
+			return false;
+		}
+		return true;
+	});
+
+	req.checkBody('isbn', 'ISBN should be 10-Digit Numeric value').custom((value) => {
+		if(value.length !== 10) {
+			return false;
+		}
+		if(!value.match(/\d/)) {
+			return false;
+		}
+		return true;
+	});
+	var data = Object.assign({}, {book: req.body}, {page_title: 'Update', action: 'update'});
+	Genre.find({}).then((genres) => {
+		data.genres = genres;
+		Author.find({}).then((authors) => {
+			data.authors = authors;
+			var errors = req.validationErrors();
+			if(errors) {
+				return res.render('book/book_create', {data, errors});
+			}
+			
+			Book.updateOne(
+				{_id: new ObjectID(req.params.id)}, {
+					title: req.body.title,
+					summary: req.body.summary,
+					isbn: req.body.isbn,
+					author: new ObjectID(req.body.author),
+					genre: new ObjectID(req.body.genre)
+				})
+				.then(() => {
+					res.redirect('/catalog/books');
+				});
+		}, (e) => {
+			res.render('book/book_create', {error: e});
+		}, (e) => {
+			res.render('book/book_create', {error: e});
+		});
+	});
 };
 
 

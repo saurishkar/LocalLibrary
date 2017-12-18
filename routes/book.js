@@ -11,7 +11,9 @@ router.post('/book/create', book.book_create_post);
 
 router.get('/book/:id', book.book_detail);
 
-router.patch('/book/:id/update', book.book_update_post);
+router.get('/book/:id/update', book.book_update_get);
+
+router.post('/book/:id/update', book.book_update_post);
 
 router.get('/book/:id/delete', book.book_delete_get);
 
