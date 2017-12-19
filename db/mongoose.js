@@ -8,7 +8,6 @@ mongoose.Promise = global.Promise;
 
 var db = mongoose.connection;
 db.on('error', () => {
-	console.log('ENV variables', process.env);
 	console.log('There was an error connecting to the database.');
 });
 

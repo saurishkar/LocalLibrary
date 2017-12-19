@@ -7,7 +7,7 @@
     "devstart": "nodemon ./bin/www"
   },
   "engines": {
-    "node": "8.1.4" 
+    "node": "8.1.4"
   },
   "dependencies": {
     "async": "^2.6.0",
@@ -23,6 +23,7 @@
     "moment": "^2.19.4",
     "mongoose": "^4.13.6",
     "morgan": "~1.9.0",
+    "pug": "^2.0.0-rc.4",
     "serve-favicon": "~2.4.5"
   },
   "main": "app.js",
@@ -30,7 +31,6 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "nodemon": "^1.12.5",
-    "pug": "^2.0.0-rc.4"
+    "nodemon": "^1.12.5"
   }
 }
