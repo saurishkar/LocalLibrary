@@ -4,7 +4,6 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var config = require('dotenv').config();
 var compression = require('compression');
 var helmet = require('helmet');
 var expressValidator = require('express-validator');
@@ -16,6 +15,9 @@ var genre = require('./routes/genre');
 var book = require('./routes/book');
 var bookInstance = require('./routes/book-instance');
 
+if(process.env.NODE_ENV !== 'production') {
+	require('dotenv').config();
+}
 var app = express();
 app.use(helmet());
 // view engine setup
