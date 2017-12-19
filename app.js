@@ -5,6 +5,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var config = require('dotenv').config();
+var compression = require('compression');
+var helmet = require('helmet');
 var expressValidator = require('express-validator');
 
 var { mongoose } = require('./db/mongoose');
@@ -15,13 +17,15 @@ var book = require('./routes/book');
 var bookInstance = require('./routes/book-instance');
 
 var app = express();
-
+app.use(helmet());
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+//
+app.use(compression()); // compress all routes
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
