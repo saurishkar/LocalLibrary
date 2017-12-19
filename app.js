@@ -7,7 +7,9 @@ var bodyParser = require('body-parser');
 var compression = require('compression');
 var helmet = require('helmet');
 var expressValidator = require('express-validator');
-
+if(process.env.NODE_ENV !== 'production') {
+	require('dotenv').config();
+}
 var { mongoose } = require('./db/mongoose');
 var index = require('./routes/index');
 var author = require('./routes/author');
@@ -15,9 +17,7 @@ var genre = require('./routes/genre');
 var book = require('./routes/book');
 var bookInstance = require('./routes/book-instance');
 
-if(process.env.NODE_ENV !== 'production') {
-	require('dotenv').config();
-}
+
 var app = express();
 app.use(helmet());
 // view engine setup
